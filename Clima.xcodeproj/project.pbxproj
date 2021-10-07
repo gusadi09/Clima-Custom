@@ -69,14 +69,9 @@
 		ADAA27AF231BBFAF00365194 /* Clima */ = {
 			isa = PBXGroup;
 			children = (
-				ADAA27B0231BBFAF00365194 /* AppDelegate.swift */,
-				ADAA27B2231BBFAF00365194 /* SceneDelegate.swift */,
-				ADAA27CA231BC3FA00365194 /* Model */,
+				EC75DFD8270E878E006D42D7 /* Common */,
 				ADAA27C9231BC3F200365194 /* View */,
-				ECED62AA26FDC0B4001829AD /* Presenter */,
-				ADAA27B9231BBFB300365194 /* Assets.xcassets */,
-				ADAA27BB231BBFB300365194 /* LaunchScreen.storyboard */,
-				ADAA27BE231BBFB300365194 /* Info.plist */,
+				EC75DFDA270E87E7006D42D7 /* Login */,
 			);
 			path = Clima;
 			sourceTree = "<group>";
@@ -84,8 +79,8 @@
 		ADAA27C9231BC3F200365194 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				ECED62A926FDC0A2001829AD /* ViewController */,
 				ADAA27B6231BBFAF00365194 /* Main.storyboard */,
+				ADAA27BB231BBFB300365194 /* LaunchScreen.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -98,6 +93,43 @@
 				EC65DBCA27002E14006916B8 /* WeatherService.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EC75DFD7270E8780006D42D7 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				ADAA27B9231BBFB300365194 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		EC75DFD8270E878E006D42D7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				ADAA27CA231BC3FA00365194 /* Model */,
+				EC75DFD7270E8780006D42D7 /* Resource */,
+				EC75DFD9270E87C0006D42D7 /* Base */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		EC75DFD9270E87C0006D42D7 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				ADAA27B0231BBFAF00365194 /* AppDelegate.swift */,
+				ADAA27B2231BBFAF00365194 /* SceneDelegate.swift */,
+				ADAA27BE231BBFB300365194 /* Info.plist */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		EC75DFDA270E87E7006D42D7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				ECED62A926FDC0A2001829AD /* ViewController */,
+				ECED62AA26FDC0B4001829AD /* Presenter */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		ECED62A926FDC0A2001829AD /* ViewController */ = {
@@ -346,7 +378,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3ECFYJZ64T;
-				INFOPLIST_FILE = Clima/Info.plist;
+				INFOPLIST_FILE = Clima/Common/Base/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -364,7 +396,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3ECFYJZ64T;
-				INFOPLIST_FILE = Clima/Info.plist;
+				INFOPLIST_FILE = Clima/Common/Base/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
