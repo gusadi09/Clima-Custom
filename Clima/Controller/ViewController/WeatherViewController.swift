@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SwiftUI
 
 class WeatherViewController: UIViewController {
     
@@ -15,9 +16,11 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
-    
-    var weatherManager = WeatherManager()
+    @IBOutlet weak var indicatorBgView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let locationManager = CLLocationManager()
+    
+    private let presenter = WeatherPresenter(weatherService: WeatherService.shared)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +29,41 @@ class WeatherViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
-        weatherManager.delegate = self
         searchTextField.delegate = self
+        
+        setupUI()
+        
+        presenter.setPresenterDelegate(presenterDelegate: self)
+        presenter.setActivityIndicator(with: activityIndicator)
+        presenter.setIndicatorBg(with: indicatorBgView)
     }
+    
+    func setupUI() {
+        indicatorBgView.backgroundColor = .black
+        indicatorBgView.alpha = 0.5
+        
+        indicatorBgView.layer.cornerRadius = 10
+        indicatorBgView.clipsToBounds = true
+        indicatorBgView.layer.masksToBounds = false
+        
+        activityIndicator.color = .white
+        activityIndicator.startAnimating()
+    }
+}
 
+//MARK: -WeatherPresenterDelegate
+extension WeatherViewController: WeatherPresenterDelegate {
+    func didUpdateWeather(weather: WeatherModel) {
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = weather.temperatureString
+            self.conditionImageView.image = UIImage(systemName: weather.conditionName)
+            self.cityLabel.text = weather.cityName
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
+    }
 }
 
 //MARK: - UITextFieldDelegate
@@ -57,29 +91,11 @@ extension WeatherViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         if let city = searchTextField.text {
-            weatherManager.fetchWeather(cityName: city)
+            self.presenter.fetchWeather(cityName: city)
         }
         
         searchTextField.text = ""
         
-    }
-}
-
-//MARK: - WeatherManagerDelegate
-
-
-extension WeatherViewController: WeatherManagerDelegate {
-    
-    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
-        DispatchQueue.main.async {
-            self.temperatureLabel.text = weather.temperatureString
-            self.conditionImageView.image = UIImage(systemName: weather.conditionName)
-            self.cityLabel.text = weather.cityName
-        }
-    }
-    
-    func didFailWithError(error: Error) {
-        print(error)
     }
 }
 
@@ -97,7 +113,11 @@ extension WeatherViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
-            weatherManager.fetchWeather(latitude: lat, longitude: lon)
+            
+            DispatchQueue.main.async {
+                self.presenter.fetchWeather(latitude: lat, longitude: lon)
+            }
+            
         }
     }
     
