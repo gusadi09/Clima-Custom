@@ -43,18 +43,7 @@ class WeatherPresenter {
         self.indicatorBgView?.isHidden = false
         
         let urlString = "\(weatherService.weatherURL)&q=\(cityName)"
-        weatherService.performRequest(with: urlString) { result in
-            switch result {
-            case .success(let data) :
-                let weathers = WeatherModel(conditionId: data.weather[0].id, cityName: data.name, temperature: data.main.temp)
-                
-                self.activityIndicator?.stopAnimating()
-                self.indicatorBgView?.isHidden = true
-                self.weatherPresenterDelegate?.didUpdateWeather(weather: weathers)
-            case .failure(let error) :
-                self.weatherPresenterDelegate?.didFailWithError(error: error)
-            }
-        }
+		self.performRequest(with: urlString)
     }
     
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
@@ -62,17 +51,21 @@ class WeatherPresenter {
         self.indicatorBgView?.isHidden = false
         
         let urlString = "\(weatherService.weatherURL)&lat=\(latitude)&lon=\(longitude)"
-        weatherService.performRequest(with: urlString) { result in
-            switch result {
-            case .success(let data) :
-                let weathers = WeatherModel(conditionId: data.weather[0].id, cityName: data.name, temperature: data.main.temp)
-                
-                self.activityIndicator?.stopAnimating()
-                self.indicatorBgView?.isHidden = true
-                self.weatherPresenterDelegate?.didUpdateWeather(weather: weathers)
-            case .failure(let error) :
-                self.weatherPresenterDelegate?.didFailWithError(error: error)
-            }
-        }
+		self.performRequest(with: urlString)
     }
+
+	func performRequest(with url: String) {
+		weatherService.performRequest(with: url) { result in
+			switch result {
+			case .success(let data) :
+				let weathers = WeatherModel(conditionId: data.weather[0].id, cityName: data.name, temperature: data.main.temp)
+
+				self.activityIndicator?.stopAnimating()
+				self.indicatorBgView?.isHidden = true
+				self.weatherPresenterDelegate?.didUpdateWeather(weather: weathers)
+			case .failure(let error) :
+				self.weatherPresenterDelegate?.didFailWithError(error: error)
+			}
+		}
+	}
 }
