@@ -74,7 +74,6 @@
 				ADAA27CA231BC3FA00365194 /* Model */,
 				ADAA27C9231BC3F200365194 /* View */,
 				ECED62AA26FDC0B4001829AD /* Presenter */,
-				ECED62A926FDC0A2001829AD /* ViewController */,
 				ADAA27B9231BBFB300365194 /* Assets.xcassets */,
 				ADAA27BB231BBFB300365194 /* LaunchScreen.storyboard */,
 				ADAA27BE231BBFB300365194 /* Info.plist */,
@@ -85,6 +84,7 @@
 		ADAA27C9231BC3F200365194 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ECED62A926FDC0A2001829AD /* ViewController */,
 				ADAA27B6231BBFAF00365194 /* Main.storyboard */,
 			);
 			path = View;
